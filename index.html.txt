@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUDIO 21 | Gestión de Clientes (CRM)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #C5A059; /* Un dorado elegante */
+            --dark-gold: #8E6D31;
+            --black: #111111;
+            --soft-black: #1a1a1a;
+            --white: #F5F5F5;
+            --gray: #888;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid var(--dark-gold);
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            letter-spacing: 6px;
+            margin: 0;
+            color: var(--gold);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* Paneles */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 900px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--soft-black);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .section-title {
+            color: var(--gold);
+            margin-top: 0;
+            border-bottom: 1px solid var(--dark-gold);
+            padding-bottom: 10px;
+        }
+
+        /* Formulario */
+        form label { font-size: 0.8rem; font-weight: 600; color: var(--gold); display: block; margin-bottom: 5px; }
+        input, select, textarea {
+            width: 100%;
+            background: #000;
+            border: 1px solid var(--dark-gold);
+            color: white;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            box-sizing: border-box; /* Importante para padding */
+        }
+
+        input:focus, select:focus { border-color: var(--gold); outline: none; }
+
+        /* Botones Control (CTL) */
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-gold { background: var(--gold); color: black; width: 100%; margin-top: 10px; }
+        .btn-gold:hover { background: var(--dark-gold); }
+
+        .btn-ws { background: #25D366; color: white; font-size: 0.7rem; padding: 5px 10px; }
+        .btn-action { background: #333; color: white; font-size: 0.7rem; padding: 5px 10px; margin-right: 5px; }
+        .btn-delete { background: #551a1a; color: white; font-size: 0.7rem; padding: 5px 10px; }
+
+        /* Tabla de Gestión */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { color: var(--gold); text-align: left; padding: 15px; border-bottom: 2px solid var(--gold); }
+        td { padding: 15px; border-bottom: 1px solid #333; font-size: 0.9rem; }
+
+        .service-tag {
+            font-size: 0.7rem;
+            background: var(--dark-gold);
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: black;
+            font-weight: bold;
+        }
+
+        .notes { color: var(--gray); font-style: italic; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>STUDIO 21</h1>
+        <p style="letter-spacing: 3px; font-weight: 300;">MANAGEMENT SYSTEM</p>
+    </header>
+
+    <div class="grid-layout">
+        <div class="card">
+            <h3 class="section-title">Añadir Nuevo Cliente</h3>
+            <form id="clientForm">
+                <label>Nombre Completo</label>
+                <input type="text" id="clientName" placeholder="Juan Pérez" required>
+                
+                <label>Teléfono (WhatsApp)</label>
+                <input type="tel" id="clientPhone" placeholder="521..." required>
+
+                <label>Servicio Prestado</label>
+                <select id="clientService" required>
+                    <optgroup label="Cortes">
+                        <option value="Corte Dama">Cortes Dama</option>
+                        <option value="Corte Caballero">Cortes Caballero</option>
+                        <option value="Corte Niño">Cortes Niño</option>
+                        <option value="Corte Barber">Cortes Barber</option>
+                    </optgroup>
+                    <optgroup label="Técnico">
+                        <option value="Tinte">Tintes</option>
+                        <option value="Alaciado">Alaciado</option>
+                        <option value="Ondulado">Ondulado</option>
+                    </optgroup>
+                    <optgroup label="Belleza / Tratamientos">
+                        <option value="Lifting pestañas">Lifting pestañas</option>
+                        <option value="Gelish">Gelish</option>
+                        <option value="Limpieza facial">Limpieza facial (Dermoabrasion)</option>
+                    </optgroup>
+                    <optgroup label="Técnicas Especiales">
+                        <option value="Diseño d imagen">Diseño d imagen</option>
+                        <option value="Depilacion c/ cera">Depilacion c/ cera</option>
+                        <option value="Planchado d Ceja/henna">Planchado d Ceja/henna</option>
+                        <option value="Microblading">Microblading</option>
+                        <option value="Láser de plasma">Láser de plasma (Lunas, verrugas...)</option>
+                    </optgroup>
+                </select>
+
+                <label>Notas de Visita (Tinte usado, preferencias...)</label>
+                <textarea id="clientNotes" rows="4" placeholder="Fórmula: Tinte 7.1 con 20 vol... Le gusta mucho café."></textarea>
+
+                <button type="submit" class="btn btn-gold">Registrar en Base de Datos</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3 class="section-title">Listado de Clientes y Gestión</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Último Servicio</th>
+                        <th>Fecha Visita</th>
+                        <th>Acciones (CTL)</th>
+                    </tr>
+                </thead>
+                <tbody id="clientTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- LÓGICA DE DATOS LOCALES ---
+    // Clientes iniciales si no hay ninguno guardado
+    const defaultClients = [
+        { id: 1, name: "Maria L.", phone: "52181156288", service: "Tinte", notes: "Color base 6.0, puntas rubias.", date: "15/10/2023" },
+        { id: 2, name: "Carlos G.", phone: "52181156288", service: "Corte Barber", notes: "Le gusta desvanecido medio.", date: "16/10/2023" }
+    ];
+
+    // Cargar clientes desde localStorage o usar los predeterminados
+    let clients = JSON.parse(localStorage.getItem('studio21_data')) || defaultClients;
+
+    // Función para renderizar la tabla de clientes
+    function renderClients() {
+        const tableBody = document.getElementById('clientTableBody');
+        tableBody.innerHTML = '';
+
+        clients.forEach(client => {
+            // Mensaje automático para WhatsApp
+            const wsMessage = `Hola ${client.name}, te saludamos de STUDIO 21. Esperamos que te haya gustado tu ${client.service}. ¡Te esperamos pronto!`;
+            const waLink = `https://wa.me/${client.phone}?text=${encodeURIComponent(wsMessage)}`;
+
+            tableBody.innerHTML += `
+                <tr>
+                    <td>
+                        <strong>${client.name}</strong><br>
+                        <span class="notes">${client.notes}</span>
+                    </td>
+                    <td><span class="service-tag">${client.service}</span></td>
+                    <td>${client.date}</td>
+                    <td>
+                        <a href="${waLink}" target="_blank" class="btn btn-ws">WhatsApp</a>
+                        <button class="btn btn-action" onclick="alert('Funcionalidad de editar no incluida en este ejemplo simple.')">Editar</button>
+                        <button class="btn btn-delete" onclick="deleteClient(${client.id})">Eliminar</button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    // --- LÓGICA DEL FORMULARIO ---
+    document.getElementById('clientForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const newClient = {
+            id: Date.now(), // ID único basado en el tiempo
+            name: document.getElementById('clientName').value,
+            phone: document.getElementById('clientPhone').value,
+            service: document.getElementById('clientService').value,
+            notes: document.getElementById('clientNotes').value || "Sin notas adicionales.",
+            date: new Date().toLocaleDateString() // Fecha actual
+        };
+
+        // Guardar, limpiar y refrescar
+        clients.push(newClient);
+        saveAndRender();
+        this.reset();
+    });
+
+    // Función CTL: Eliminar cliente
+    function deleteClient(id) {
+        if (confirm("¿Estás seguro de que quieres eliminar este registro de STUDIO 21?")) {
+            clients = clients.filter(c => c.id !== id);
+            saveAndRender();
+        }
+    }
+
+    // Guardar en LocalStorage y renderizar
+    function saveAndRender() {
+        localStorage.setItem('studio21_data', JSON.stringify(clients));
+        renderClients();
+    }
+
+    // Ejecutar al cargar la página
+    renderClients();
+</script>
+
+</body>
+</html>
